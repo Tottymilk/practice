@@ -13,6 +13,7 @@ void writeToResult(string name_file, vector<string> array_of_words);
 bool isNumber(string s);
 void sort(vector <string>& array_of_words);
 int findInAlphabet(char a);
+vector<int> getArrayCountWords(vector<string> array_of_words);
 
 int main()
 {
@@ -36,6 +37,9 @@ int main()
 
     //запись в файл result
     writeToResult(name_file, array_of_words);
+
+    //подсчет количества слов на каждую букву
+    vector<int> number_words_array = getArrayCountWords(array_of_words);
 
     return 0;
 }
@@ -225,4 +229,22 @@ int findInAlphabet(char a)
         return high_letters.find(a);
     else
         return low_letters.find(a);
+}
+
+vector<int> getArrayCountWords(vector<string> array_of_words)
+{
+    vector<int> count_words_array(33);
+    //Каждый элемент массив - это количество слов на букву
+
+    string high_letters = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"; //алфавит русский
+    string low_letters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+
+    for (int i = 0; i < array_of_words.size(); i++) //идем по всему массиву строк
+    {
+        if (!isNumber(array_of_words[i]))
+        {
+            count_words_array[findInAlphabet(array_of_words[i][0])]++;// увеличиваем элемент с индексом равным номеру маленькой буквы в нижнем регистре
+        }
+    }
+    return count_words_array;
 }
