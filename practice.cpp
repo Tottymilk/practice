@@ -14,6 +14,7 @@ bool isNumber(string s);
 void sort(vector <string>& array_of_words);
 int findInAlphabet(char a);
 vector<int> getArrayCountWords(vector<string> array_of_words);
+void writeToAnalysis(string name_file, string text, int word_count, vector<int> number_words_array, int time);
 
 int main()
 {
@@ -40,6 +41,11 @@ int main()
 
     //подсчет количества слов на каждую букву
     vector<int> number_words_array = getArrayCountWords(array_of_words);
+
+    int words_count = array_of_words.size(); //количество слов
+
+    //запись в файл analysis 
+    writeToAnalysis(name_file, text, words_count, number_words_array, end_time - start_time);
 
     return 0;
 }
@@ -247,4 +253,37 @@ vector<int> getArrayCountWords(vector<string> array_of_words)
         }
     }
     return count_words_array;
+}
+
+void writeToAnalysis(string name_file, string text, int word_count, vector<int> number_words_array, int time)
+{
+    ofstream file_analysis;
+
+    file_analysis.open("analysis_" + name_file + ".txt"); // открываем файл на запись в него
+
+    file_analysis
+        << "Исходный текст: " << endl
+        << "<<" << text << ">>" << endl
+        << "Параметры выбранного варианта (22): кириллица, по алфавиту, по возрастанию, учитывать числа, сортировка шелла" << endl
+        << "Количество слов: " << word_count << endl
+        << "Время сортировки: " << static_cast<double>(time) / 1000 << " с" << endl
+        << "Статистика (количество слов на каждую букву алфавита): " << endl;
+
+    cout
+        << "Исходный текст: " << endl
+        << "<<" << text << ">>" << endl
+        << "Параметры выбранного варианта (22): кириллица, по алфавиту, по возрастанию, учитывать числа, сортировка шелла" << endl
+        << "Количество слов: " << word_count << endl
+        << "Время сортировки: " << static_cast<double>(time) / 1000 << " с" << endl
+        << "Статистика (количество слов на каждую букву алфавита): " << endl;
+
+    string lo_reg = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+
+    //вывод количества слов на каждую букву
+    for (int i = 0; i < number_words_array.size(); i++)
+    {
+        file_analysis << lo_reg[i] << ": " << number_words_array[i] << endl;
+        cout << lo_reg[i] << ": " << number_words_array[i] << endl;
+    }
+    file_analysis.close();
 }
