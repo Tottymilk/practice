@@ -10,6 +10,9 @@ using namespace std;
 vector<string> separateWords(string text);
 string getText(string name_file);
 void writeToResult(string name_file, vector<string> array_of_words);
+bool isNumber(string s);
+void sort(vector <string>& array_of_words);
+int findInAlphabet(char a);
 
 int main()
 {
@@ -25,6 +28,14 @@ int main()
 
     //функция разбивает текст на слова 
     vector <string> array_of_words = separateWords(text);
+
+    //сортировка Шелла
+    int start_time = clock();
+    sort(array_of_words);
+    int end_time = clock();
+
+    //запись в файл result
+    writeToResult(name_file, array_of_words);
 
     return 0;
 }
@@ -112,4 +123,106 @@ void writeToResult(string name_file, vector <string> array_of_words)
         file_result << array_of_words[i] << endl;
     }
     file_result.close();
+}
+
+void sort(vector <string>& array_of_words)
+{
+    string numbers = "0123456789-"; //цифры и минус, то с чего может начинаться число
+
+    int i, j, step, number_tmp;
+    string tmp;
+
+    vector <string> array_of_numbers;
+    vector <string> subarray_of_words;
+
+    //получаем массив чисел и массив слов
+    for (i = 0; i < array_of_words.size(); i++)
+    {
+        if (numbers.find(array_of_words[i][0]) != -1)
+            array_of_numbers.push_back(array_of_words[i]);
+        else
+            subarray_of_words.push_back(array_of_words[i]);
+    }
+
+    //сортируем массив слов
+    for (step = subarray_of_words.size() / 2; step > 0; step /= 2)
+    {
+        for (i = step; i < subarray_of_words.size(); i++)
+        {
+            tmp = subarray_of_words[i];
+            number_tmp = findInAlphabet(subarray_of_words[i][0]); //номер в алфавите
+
+            for (j = i; j >= step; j -= step)
+            {
+                if (number_tmp < findInAlphabet(subarray_of_words[j - step][0]))
+                    subarray_of_words[j] = subarray_of_words[j - step];
+                else
+                    break;
+            }
+            subarray_of_words[j] = tmp;
+        }
+    }
+
+    //сортируем массив чисел
+    double double_number_tmp, double_number;
+    for (step = array_of_numbers.size() / 2; step > 0; step /= 2)
+    {
+        for (i = step; i < array_of_numbers.size(); i++)
+        {
+            tmp = array_of_numbers[i];
+            if (isNumber(array_of_numbers[i])) //если строка - дробное число 
+            {
+                double_number_tmp = stod(array_of_numbers[i]); //временной переменной присваиваем число
+
+                for (j = i; j >= step; j -= step)
+                {
+                    if (isNumber(array_of_numbers[j])) //если строка - дробное число
+                    {
+                        if (double_number_tmp < stod(array_of_numbers[j - step])) //сравниваем число временной переменной и число array_of_numbers[j - step]
+                            array_of_numbers[j] = array_of_numbers[j - step];
+                        else
+                            break;
+                    }
+                }
+                array_of_numbers[j] = tmp;
+            }
+        }
+    }
+    array_of_words = {};
+
+    //сливаем массивы обратно в один массив
+    for (i = 0; i < subarray_of_words.size(); i++)
+    {
+        array_of_words.push_back(subarray_of_words[i]);
+    }
+
+    for (i = 0; i < array_of_numbers.size(); i++)
+    {
+        array_of_words.push_back(array_of_numbers[i]);
+    }
+}
+
+bool isNumber(string s)
+{
+    try
+    {
+        double a = stod(s);
+        return 1;
+    }
+    catch (invalid_argument e)
+    {
+        return 0;
+    }
+}
+
+int findInAlphabet(char a)
+{
+    //функция возвращает индекс вхождения символа в алфавит 
+    string low_letters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+    string high_letters = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+
+    if (high_letters.find(a) != -1)
+        return high_letters.find(a);
+    else
+        return low_letters.find(a);
 }
