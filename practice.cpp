@@ -9,6 +9,7 @@ using namespace std;
 
 vector<string> separateWords(string text);
 string getText(string name_file);
+void writeToResult(string name_file, vector<string> array_of_words);
 
 int main()
 {
@@ -98,4 +99,17 @@ vector<string> separateWords(string text)
         }
     }
     return array_of_words;
+}
+
+void writeToResult(string name_file, vector <string> array_of_words)
+{
+    ofstream file_result;
+    file_result.open("result_" + name_file + ".txt"); // открываем файл на запись в него
+
+    //вывод слов
+    for (int i = 0; i < array_of_words.size(); i++)
+    {
+        file_result << array_of_words[i] << endl;
+    }
+    file_result.close();
 }
