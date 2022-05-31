@@ -135,6 +135,12 @@ int sort(vector <string>& array_of_words)
 Программа работает только с файлами с расширением .txt. 
                                             
 Скриношот файла с исходными данными:
-                              ![image_2022-05-31_22-41-47](https://user-images.githubusercontent.com/104491550/171271607-dd6de4b1-1743-47d9-8c07-6eeb7f7eea8f.png)
+![image](https://user-images.githubusercontent.com/104491550/171271753-db42153b-d73f-4bbc-b906-fc96f8868b51.png)
+Скриношот файла с отсортированными словами:
+![image](https://user-images.githubusercontent.com/104491550/171271824-ff0ead38-cc93-4db6-a693-c9046f25f9ab.png)
+Скриношот файла с анализом:
+![image](https://user-images.githubusercontent.com/104491550/171271928-2fece4d5-6c67-4df6-9314-4ad2a41e92d6.png)
+Скриношот консоли:    
+![image](https://user-images.githubusercontent.com/104491550/171272084-6f52908b-24d3-4c03-a275-ab1abcdc51bf.png)
+![image](https://user-images.githubusercontent.com/104491550/171272150-83679bcf-022e-4a11-a25a-8255ed2fa160.png)
 
-              
