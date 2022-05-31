@@ -3,7 +3,7 @@
 Погрешность разбивки слов +- 1 слово, при кол-ве слов 2000.
 
 Для разбивки исходного текста на слова используется функция:
-
+'''
 vector<string> separateWords(string text)
 {
     vector<string> array_of_words; //массив слов
@@ -49,11 +49,10 @@ vector<string> separateWords(string text)
         }
     }
     return array_of_words;
-}
-       
-                                     
+}  
+'''                                    
 Для сортировки используется функция:
-                                     
+'''                                  
 int sort(vector <string>& array_of_words)
 {
     string numbers = "0123456789-"; //цифры и минус, то с чего может начинаться число
@@ -134,7 +133,7 @@ int sort(vector <string>& array_of_words)
 
     return end_time - start_time;
 }
-    
+                                            '''
                                             
 Программа работает только с файлами с расширением .txt. 
                                             
