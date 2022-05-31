@@ -11,7 +11,7 @@ vector<string> separateWords(string text);
 string getText(string name_file);
 void writeToResult(string name_file, vector<string> array_of_words);
 bool isNumber(string s);
-void sort(vector <string>& array_of_words);
+int sort(vector <string>& array_of_words);
 int findInAlphabet(char a);
 vector<int> getArrayCountWords(vector<string> array_of_words);
 void writeToAnalysis(string name_file, string text, int word_count, vector<int> number_words_array, int time);
@@ -32,9 +32,7 @@ int main()
     vector <string> array_of_words = separateWords(text);
 
     //сортировка Шелла
-    int start_time = clock();
-    sort(array_of_words);
-    int end_time = clock();
+    int time = sort(array_of_words);
 
     //запись в файл result
     writeToResult(name_file, array_of_words);
@@ -45,7 +43,7 @@ int main()
     int words_count = array_of_words.size(); //количество слов
 
     //запись в файл analysis 
-    writeToAnalysis(name_file, text, words_count, number_words_array, end_time - start_time);
+    writeToAnalysis(name_file, text, words_count, number_words_array, time);
 
     return 0;
 }
@@ -135,11 +133,11 @@ void writeToResult(string name_file, vector <string> array_of_words)
     file_result.close();
 }
 
-void sort(vector <string>& array_of_words)
+int sort(vector <string>& array_of_words)
 {
     string numbers = "0123456789-"; //цифры и минус, то с чего может начинаться число
 
-    int i, j, step, number_tmp;
+    int i, j, step, number_tmp, start_time, end_time;
     string tmp;
 
     vector <string> array_of_numbers;
@@ -154,6 +152,7 @@ void sort(vector <string>& array_of_words)
             subarray_of_words.push_back(array_of_words[i]);
     }
 
+    start_time = clock();
     //сортируем массив слов
     for (step = subarray_of_words.size() / 2; step > 0; step /= 2)
     {
@@ -198,6 +197,7 @@ void sort(vector <string>& array_of_words)
             }
         }
     }
+    end_time = clock();
     array_of_words = {};
 
     //сливаем массивы обратно в один массив
@@ -210,6 +210,8 @@ void sort(vector <string>& array_of_words)
     {
         array_of_words.push_back(array_of_numbers[i]);
     }
+
+    return end_time - start_time;
 }
 
 bool isNumber(string s)
