@@ -87,7 +87,6 @@ vector<string> separateWords(string text)
     for (int i = 2; i < text.length() - 2; i++)
     {
         if (high_letters.find(text[i]) != -1 || low_letters.find(text[i]) != -1) //если символ строки буква из кириллицы
-
         {
             s += text[i]; //собираем слово 
             if (high_letters.find(text[i + 1]) == -1 && low_letters.find(text[i + 1]) == -1 && text[i + 1] != '-')
